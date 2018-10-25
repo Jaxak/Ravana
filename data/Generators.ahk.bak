@@ -4,7 +4,9 @@ Return StrSplit(Txt, " ")
 }
 
 GetFIO(){
-	Return ["Тестовое", "Имя", "Пользователя"]
+	file:="data\myFIO.txt"
+	FileEncoding, UTF-8
+	Return StrSplit(ReadMyFile(file), " ") ; ["Тестовое", "Имя", "Пользователя"]
 }
 
 GetCity(){
@@ -15,6 +17,7 @@ GetCity(){
 	result:=a[x]
 Return result
 }
+
 GetStreet(){
 	Return "Тестовое название улицы"
 }
@@ -86,7 +89,9 @@ Return mail
 }
 
 GetOrganizationName(){
-	Return "Тестовое название организации"
+	file:="data\myOrganizationName.txt"
+	FileEncoding, UTF-8
+	Return ReadMyFile(file)
 }
 
 GetRandomDate(){ ; возвращает строку в формате ddmmgggg 
@@ -137,7 +142,7 @@ GetBankAccount(){
 	account=
 	Loop, 20 {
 		random, ras, 0, 9 
-		account=%chet%%ras%
+		account=%account%%ras%
     }
 Return account
 }
@@ -167,4 +172,17 @@ GetSnils(){
 		snils:=snils*100+sum
 	}
 Return snils
+}
+
+ReadMyFile(file){
+	FileRead, out, %file%
+	loop, parse, out, `n, `r
+	{
+		Total:=a_index
+		If A_LoopField
+			Num++
+	}
+	random, n, 1, Num
+    FileReadLine, Txt, %file%, n
+Return Txt
 }
